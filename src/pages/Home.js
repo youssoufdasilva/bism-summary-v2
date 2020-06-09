@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const modules = [
   {
@@ -95,12 +96,12 @@ const Home = () => (
           >
             <h1 className='text-xl font-semibold mb-4'>{module.name}</h1>
             <p className='text-sm text-justify mb-auto'>{module.description}</p>
-            <a
+            <Link
               className={`hover:bg-${module.color}-400 hover:text-${module.color}-800 hover:border-2 hover:border-${module.color}-800 bg-${module.color}-600 text-white font-semibold border-2 border-${module.color}-300 rounded px-2 py-1 w-1/2 mt-2 mx-auto`}
-              href={module.link}
+              to={module.link}
             >
               More
-            </a>
+            </Link>
           </div>
         </div>
       ))}

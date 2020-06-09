@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { ThemeContext } from '../theme-context';
+
 const modules = [
   {
     name: 'CST4310 - Information Systems Quality Management',
@@ -34,79 +36,103 @@ const modules = [
 ];
 
 const Home = () => (
-  <div>
-    <div className='shadow p-1 my-10 bg-orange-300 rounded-lg'>
-      {/* intro */}
-      <h1 className='text-2xl'>About Middlesex University (MDX)</h1>
-      <ul>
-        <li>
-          <strong>Top modern university in the UK </strong>
-          in Times Higher Young University Rankings (2019)
-        </li>
-        <li>
-          <strong>Top modern uni in London </strong>
-          for research funding (Research Excellence Framework 2014)
-        </li>
-        <li>
-          <strong>Over 140 countries </strong>
-          represented in the community of students and staff
-        </li>
-        <li className='flex justify-end my-5'>
-          Learn More »
-          <a
-            className='font-bold underline hover:bg-orange-500 hover:text-white'
-            href='https://www.mdx.ac.uk/courses/postgraduate'
-          >
-            Here
-          </a>
-          «
-        </li>
-      </ul>
-
-      <hr className='mb-4' />
-
-      <h1 className='text-2xl'>
-        About Business Information Systems Management (BISM)!
-      </h1>
-      <p>
-        Business information, and using it to increase profitability, is
-        becoming an ever more essential part of running any organisation. This
-        course will train you to design and develop information management
-        systems and make the best use of them in the workplace – a highly
-        sought-after skill in today's competitive market.
-      </p>
-      <span className='flex justify-end my-5'>
-        Learn More »
-        <a
-          className='font-bold underline hover:bg-orange-500 hover:text-white'
-          href='https://www.mdx.ac.uk/courses/postgraduate/business-information-systems-management'
+  <ThemeContext.Consumer>
+    {({ theme }) => (
+      <div>
+        <div
+          className={
+            theme === 'rainbow'
+              ? 'shadow p-3 my-10 bg-orange-400 rounded-lg'
+              : `shadow p-3 my-10 bg-${theme}-400 rounded-lg`
+          }
         >
-          Here
-        </a>
-        «
-      </span>
-    </div>
+          {/* intro */}
+          <h1 className='text-2xl'>About Middlesex University (MDX)</h1>
+          <ul>
+            <li>
+              <strong>Top modern university in the UK </strong>
+              in Times Higher Young University Rankings (2019)
+            </li>
+            <li>
+              <strong>Top modern uni in London </strong>
+              for research funding (Research Excellence Framework 2014)
+            </li>
+            <li>
+              <strong>Over 140 countries </strong>
+              represented in the community of students and staff
+            </li>
+            <li className='flex justify-end my-5'>
+              Learn More »
+              <a
+                className={
+                  theme === 'rainbow'
+                    ? 'px-1 font-bold underline hover:text-white hover:bg-orange-500'
+                    : `px-1 font-bold underline hover:text-white hover:bg-${theme}-500`
+                }
+                href='https://www.mdx.ac.uk/courses/postgraduate'
+              >
+                Here
+              </a>
+              «
+            </li>
+          </ul>
 
-    <h1 className='text-2xl font-semibold'>Modules</h1>
-    <div className='flex flex-wrap p-2'>
-      {modules.map((module) => (
-        <div className='p-2 md:w-1/2 w-full'>
-          <div
-            className={`p-4 bg-${module.color}-300 rounded shadow h-full flex flex-col`}
-          >
-            <h1 className='text-xl font-semibold mb-4'>{module.name}</h1>
-            <p className='text-sm text-justify mb-auto'>{module.description}</p>
-            <Link
-              className={`hover:bg-${module.color}-400 hover:text-${module.color}-800 hover:border-2 hover:border-${module.color}-800 bg-${module.color}-600 text-white font-semibold border-2 border-${module.color}-300 rounded px-2 py-1 w-1/2 mt-2 mx-auto`}
-              to={module.link}
+          <hr className='mb-4' />
+
+          <h1 className='text-2xl'>
+            About Business Information Systems Management (BISM)!
+          </h1>
+          <p>
+            Business information, and using it to increase profitability, is
+            becoming an ever more essential part of running any organisation.
+            This course will train you to design and develop information
+            management systems and make the best use of them in the workplace –
+            a highly sought-after skill in today's competitive market.
+          </p>
+          <span className='flex justify-end my-5'>
+            Learn More »
+            <a
+              className={
+                theme === 'rainbow'
+                  ? 'px-1 font-bold underline hover:text-white hover:bg-orange-500'
+                  : `px-1 font-bold underline hover:text-white hover:bg-${theme}-500`
+              }
+              href='https://www.mdx.ac.uk/courses/postgraduate/business-information-systems-management'
             >
-              More
-            </Link>
-          </div>
+              Here
+            </a>
+            «
+          </span>
         </div>
-      ))}
-    </div>
-  </div>
+
+        <h1 className='text-2xl font-semibold'>Modules</h1>
+        <div className='flex flex-wrap p-2'>
+          {modules.map((module) => {
+            let currentTheme = theme === 'rainbow' ? module.color : theme;
+
+            return (
+              <div className='p-2 md:w-1/2 w-full'>
+                <div
+                  className={`p-4 bg-${currentTheme}-300 rounded shadow h-full flex flex-col`}
+                >
+                  <h1 className='text-xl font-semibold mb-4'>{module.name}</h1>
+                  <p className='text-sm text-justify mb-auto'>
+                    {module.description}
+                  </p>
+                  <Link
+                    className={`hover:bg-${currentTheme}-400 hover:text-${currentTheme}-800 hover:border-2 hover:border-${currentTheme}-800 bg-${currentTheme}-600 text-white font-semibold border-2 border-${currentTheme}-300 rounded px-2 py-1 w-1/2 mt-2 mx-auto`}
+                    to={module.link}
+                  >
+                    More
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )}
+  </ThemeContext.Consumer>
 );
 
 export default Home;

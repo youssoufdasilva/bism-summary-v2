@@ -19,7 +19,22 @@ class App extends React.Component {
     this.state = {
       theme: themes.gray,
       toggleTheme: this.toggleTheme,
+      cst4310Records: [],
     };
+  }
+
+  componentDidMount() {
+    fetch(
+      'https://api.airtable.com/v0/appeImf1TLInjENnH/CST4310?api_key=keyaHIT3dGLVbemjK'
+    )
+      .then((resp) => resp.json())
+      .then((data) => {
+        this.setState({ cst4310Records: data.records });
+      })
+      .catch((err) => {
+        // Error :(
+        console.log('ERROR', err);
+      });
   }
 
   render() {
@@ -29,16 +44,16 @@ class App extends React.Component {
           <Layout>
             <Switch>
               <Route path='/cst4310'>
-                <CST4310 />
+                <CST4310 data={this.state.cst4310Records} />
               </Route>
               <Route path='/cst4320'>
-                <CST4320 />
+                <CST4320 data={this.state.cst4310Records} />
               </Route>
               <Route path='/cst4330'>
-                <CST4330 />
+                <CST4330 data={this.state.cst4310Records} />
               </Route>
               <Route path='/cst4350'>
-                <CST4350 />
+                <CST4350 data={this.state.cst4310Records} />
               </Route>
 
               <Route path='/'>
